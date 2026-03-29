@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Axon</title>
-<!-- circular favicon for browser tab -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><clipPath id='circle'><circle cx='50' cy='50' r='50'/></clipPath></defs><circle cx='50' cy='50' r='50' fill='%235c0a00'/><text x='50' y='68' font-family='Georgia,serif' font-size='52' font-weight='900' fill='%23e8dcc8' text-anchor='middle'>A</text></svg>">
-<!-- square apple touch icon for add to home screen -->
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='38' fill='%235c0a00'/><text x='90' y='125' font-family='Georgia,serif' font-size='100' font-weight='900' fill='%23e8dcc8' text-anchor='middle'>A</text></svg>">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,796 +12,163 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #e8dcc8;
-    --red-deep: #5c0a00;
-    --red-mid: #9e2a0e;
-    --red-warm: #c94f24;
-    --fg: #1a0a06;
-    --muted: #7a5c50;
+    --cream: #e8dcc8; --red-deep: #5c0a00; --red-mid: #9e2a0e;
+    --red-warm: #c94f24; --fg: #1a0a06; --muted: #7a5c50;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--cream);
-    color: var(--fg);
-    font-family: 'DM Mono', monospace;
-    min-height: 100vh;
-    overflow-x: hidden;
-    cursor: crosshair;
+    background: var(--cream); color: var(--fg);
+    font-family: 'DM Mono', monospace; min-height: 100vh;
+    overflow-x: hidden; cursor: crosshair;
   }
 
-  /* grain overlay */
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
+    content: ''; position: fixed; inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.5;
+    pointer-events: none; z-index: 999; opacity: 0.5;
   }
 
   nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 3rem;
-    mix-blend-mode: multiply;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 3rem; mix-blend-mode: multiply;
   }
 
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
-    letter-spacing: 0.15em;
-    color: var(--red-deep);
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.15em; color: var(--red-deep); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--red-mid); }
 
-  /* hero */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    overflow: hidden;
-  }
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
 
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 8rem 3rem 6rem;
-    position: relative;
-    z-index: 2;
-  }
+  .hero-left { display: flex; flex-direction: column; justify-content: flex-end; padding: 8rem 3rem 6rem; position: relative; z-index: 2; }
 
-  .eyebrow {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--red-warm);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.3s;
-  }
+  .eyebrow { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red-warm); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease forwards 0.3s; }
 
-  .hero-title {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(5rem, 10vw, 10rem);
-    font-weight: 900;
-    line-height: 0.9;
-    color: var(--red-deep);
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.5s;
-  }
+  .hero-title { font-family: 'Fraunces', serif; font-size: clamp(5rem, 10vw, 10rem); font-weight: 900; line-height: 0.9; color: var(--red-deep); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.8s ease forwards 0.5s; }
+  .hero-title em { font-style: italic; color: var(--red-warm); }
 
-  .hero-title em {
-    font-style: italic;
-    color: var(--red-warm);
-  }
+  .hero-sub { font-size: 0.75rem; line-height: 1.8; color: var(--muted); max-width: 340px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.7s; }
 
-  .hero-sub {
-    font-size: 0.75rem;
-    line-height: 1.8;
-    color: var(--muted);
-    max-width: 340px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.7s;
-  }
+  .hero-actions { margin-top: 3rem; display: flex; gap: 1rem; align-items: center; opacity: 0; animation: fadeUp 0.8s ease forwards 0.9s; }
 
-  .hero-actions {
-    margin-top: 3rem;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.9s;
-  }
+  .btn-primary { background: var(--red-deep); color: var(--cream); border: none; padding: 0.9rem 2rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: crosshair; text-decoration: none; transition: background 0.2s, transform 0.1s; }
+  .btn-primary:hover { background: var(--red-mid); transform: translateY(-2px); }
 
-  .btn-primary {
-    background: var(--red-deep);
-    color: var(--cream);
-    border: none;
-    padding: 0.9rem 2rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: crosshair;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.1s;
-  }
-
-  .btn-primary:hover {
-    background: var(--red-mid);
-    transform: translateY(-2px);
-  }
-
-  .btn-ghost {
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--red-deep);
-    text-decoration: none;
-    border-bottom: 1px solid var(--red-deep);
-    padding-bottom: 2px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-
+  .btn-ghost { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red-deep); text-decoration: none; border-bottom: 1px solid var(--red-deep); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
   .btn-ghost:hover { color: var(--red-warm); border-color: var(--red-warm); }
 
-  .hero-right {
-    position: relative;
-    overflow: hidden;
-  }
+  .hero-right { position: relative; overflow: hidden; }
 
-  .hero-block {
-    position: absolute;
-    inset: 0;
-    background: var(--red-deep);
-    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
-    opacity: 0;
-    animation: slideIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
-  }
+  .hero-block { position: absolute; inset: 0; background: var(--red-deep); clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); opacity: 0; animation: slideIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s; }
 
-  .hero-block-inner {
-    position: absolute;
-    inset: 0;
-    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
-    padding: 4rem 3rem;
-    gap: 2rem;
-  }
+  .hero-block-inner { position: absolute; inset: 0; clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); display: flex; flex-direction: column; justify-content: center; align-items: flex-end; padding: 4rem 3rem; gap: 2rem; }
 
-  .stat {
-    text-align: right;
-    color: var(--cream);
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards;
-  }
-
+  .stat { text-align: right; color: var(--cream); opacity: 0; animation: fadeUp 0.6s ease forwards; }
   .stat:nth-child(1) { animation-delay: 1s; }
   .stat:nth-child(2) { animation-delay: 1.2s; }
   .stat:nth-child(3) { animation-delay: 1.4s; }
 
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 4rem;
-    letter-spacing: 0.05em;
-    line-height: 1;
-    color: var(--red-warm);
-  }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; letter-spacing: 0.05em; line-height: 1; color: var(--red-warm); }
+  .stat-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,220,200,0.5); margin-top: 0.3rem; }
 
-  .stat-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(232,220,200,0.5);
-    margin-top: 0.3rem;
-  }
+  .scroll-hint { position: absolute; bottom: 2rem; left: 3rem; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 0.8rem; opacity: 0; animation: fadeUp 0.6s ease forwards 1.5s; }
+  .scroll-line { width: 40px; height: 1px; background: var(--muted); animation: growLine 1s ease forwards 1.8s; transform-origin: left; transform: scaleX(0); }
 
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 3rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 1.5s;
-  }
+  .products { padding: 8rem 3rem; position: relative; }
 
-  .scroll-line {
-    width: 40px;
-    height: 1px;
-    background: var(--muted);
-    animation: growLine 1s ease forwards 1.8s;
-    transform-origin: left;
-    transform: scaleX(0);
-  }
+  .section-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red-warm); margin-bottom: 4rem; display: flex; align-items: center; gap: 1rem; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--red-warm); opacity: 0.3; }
 
-  /* products section */
-  .products {
-    padding: 8rem 3rem;
-    position: relative;
-  }
+  .products-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: rgba(92,10,0,0.15); border: 1px solid rgba(92,10,0,0.15); }
 
-  .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--red-warm);
-    margin-bottom: 4rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
+  .product-card { background: var(--cream); padding: 3rem 2.5rem; position: relative; overflow: hidden; transition: background 0.3s; }
 
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--red-warm);
-    opacity: 0.3;
-  }
-
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: rgba(92,10,0,0.15);
-    border: 1px solid rgba(92,10,0,0.15);
-  }
-
-  .product-card {
-    background: var(--cream);
-    padding: 3rem 2.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s;
-  }
-
-  .product-card::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--red-deep);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
+  .product-card::before { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--red-deep); transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
   .product-card:hover::before { transform: scaleX(1); }
   .product-card:hover { background: rgba(232,220,200,0.5); }
 
-  .product-tag {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--red-warm);
-    margin-bottom: 1.5rem;
-    display: block;
-  }
+  .product-tag { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-warm); margin-bottom: 1.5rem; display: block; }
+  .product-name { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--red-deep); margin-bottom: 1rem; line-height: 1.1; }
+  .product-desc { font-size: 0.7rem; line-height: 1.9; color: var(--muted); }
 
-  .product-name {
-    font-family: 'Fraunces', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--red-deep);
-    margin-bottom: 1rem;
-    line-height: 1.1;
-  }
+  .product-status { margin-top: 2rem; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red-deep); display: flex; align-items: center; gap: 0.5rem; }
 
-  .product-desc {
-    font-size: 0.7rem;
-    line-height: 1.9;
-    color: var(--muted);
-  }
-
-  .product-status {
-    margin-top: 2rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--red-deep);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--red-warm);
-  }
-
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red-warm); }
   .dot.live { animation: pulse 2s infinite; }
   .dot.soon { background: var(--muted); }
 
-  /* manifesto strip */
-  .strip {
-    background: var(--red-deep);
-    padding: 4rem 3rem;
-    display: flex;
-    gap: 4rem;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  .strip-text {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    font-style: italic;
-    color: var(--cream);
-    flex: 1;
-    line-height: 1.3;
-  }
-
+  .strip { background: var(--red-deep); padding: 4rem 3rem; display: flex; gap: 4rem; align-items: center; overflow: hidden; }
+  .strip-text { font-family: 'Fraunces', serif; font-size: clamp(1.5rem, 3vw, 2.5rem); font-style: italic; color: var(--cream); flex: 1; line-height: 1.3; }
   .strip-text span { color: var(--red-warm); }
+  .strip-mono { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,220,200,0.4); writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
 
-  .strip-mono {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(232,220,200,0.4);
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    white-space: nowrap;
-  }
-
-  /* footer */
-  footer {
-    padding: 4rem 3rem 3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    border-top: 1px solid rgba(92,10,0,0.15);
-  }
-
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 5rem;
-    color: rgba(92,10,0,0.1);
-    line-height: 1;
-    letter-spacing: 0.1em;
-    user-select: none;
-  }
-
-  .footer-right {
-    text-align: right;
-  }
-
-  .footer-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .footer-links a {
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
+  footer { padding: 4rem 3rem 3rem; display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(92,10,0,0.15); }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: rgba(92,10,0,0.1); line-height: 1; letter-spacing: 0.1em; user-select: none; }
+  .footer-right { text-align: right; }
+  .footer-links { list-style: none; display: flex; gap: 2rem; margin-bottom: 1rem; }
+  .footer-links a { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--red-mid); }
+  .footer-copy { font-size: 0.6rem; color: var(--muted); opacity: 0.6; }
 
-  .footer-copy {
-    font-size: 0.6rem;
-    color: var(--muted);
-    opacity: 0.6;
-  }
-
-  /* flash red on dead links */
-  @keyframes flashRed {
-    0%   { background: var(--cream); color: var(--fg); }
-    20%  { background: var(--red-warm); color: var(--cream); }
-    60%  { background: var(--red-mid); color: var(--cream); }
-    100% { background: var(--cream); color: var(--fg); }
-  }
-
-  .btn-ghost.flashing {
-    animation: flashGhost 0.5s ease forwards;
-  }
-
+  .btn-ghost.flashing { animation: flashGhost 0.5s ease forwards; }
   @keyframes flashGhost {
     0%   { color: var(--red-deep); border-color: var(--red-deep); }
     30%  { color: var(--red-warm); border-color: var(--red-warm); background: rgba(201,79,36,0.1); }
     100% { color: var(--red-deep); border-color: var(--red-deep); background: transparent; }
   }
 
-  .nav-dead.flashing {
-    animation: flashNav 0.5s ease forwards;
-  }
+  .btn-notify { margin-top: 1.2rem; display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red-mid); border: 1px solid var(--red-mid); padding: 0.5rem 1rem; background: transparent; cursor: crosshair; transition: background 0.2s, color 0.2s; }
+  .btn-notify:hover { background: var(--red-mid); color: var(--cream); }
+  .btn-notify.subscribed { color: var(--muted); border-color: var(--muted); cursor: default; }
 
-  @keyframes flashNav {
-    0%   { color: var(--muted); }
-    30%  { color: var(--red-warm); }
-    100% { color: var(--muted); }
-  }
-
-  /* notify button on product cards */
-  .btn-notify {
-    margin-top: 1.2rem;
-    display: inline-block;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--red-mid);
-    border: 1px solid var(--red-mid);
-    padding: 0.5rem 1rem;
-    background: transparent;
-    cursor: crosshair;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .btn-notify:hover {
-    background: var(--red-mid);
-    color: var(--cream);
-  }
-
-  .btn-notify.subscribed {
-    color: var(--muted);
-    border-color: var(--muted);
-    cursor: default;
-  }
-
-  /* notify modal */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(26,10,6,0.6);
-    z-index: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-  }
-
-  .modal-overlay.open {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .modal {
-    background: var(--cream);
-    border: 1px solid rgba(92,10,0,0.2);
-    padding: 3rem;
-    width: 100%;
-    max-width: 420px;
-    position: relative;
-    transform: translateY(16px);
-    transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
-  }
-
-  .modal-overlay.open .modal { transform: translateY(0); }
-
-  .modal-tag {
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--red-warm);
-    margin-bottom: 1rem;
-    display: block;
-  }
-
-  .modal h3 {
-    font-family: 'Fraunces', serif;
-    font-size: 1.6rem;
-    color: var(--red-deep);
-    margin-bottom: 0.5rem;
-  }
-
-  .modal p {
-    font-size: 0.7rem;
-    color: var(--muted);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-  }
-
-  .modal-input {
-    width: 100%;
-    background: transparent;
-    border: 1px solid rgba(92,10,0,0.25);
-    padding: 0.75rem 1rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--fg);
-    outline: none;
-    margin-bottom: 0.8rem;
-    transition: border-color 0.2s;
-  }
-
-  .modal-input:focus { border-color: var(--red-mid); }
-
-  .modal-submit {
-    width: 100%;
-    background: var(--red-deep);
-    color: var(--cream);
-    border: none;
-    padding: 0.85rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: crosshair;
-    transition: background 0.2s;
-  }
-
-  .modal-submit:hover { background: var(--red-mid); }
-
-  .modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1.2rem;
-    background: none;
-    border: none;
-    font-size: 1.1rem;
-    color: var(--muted);
-    cursor: crosshair;
-    line-height: 1;
-  }
-
-  .modal-close:hover { color: var(--red-deep); }
-
-  .modal-success {
-    font-size: 0.7rem;
-    color: var(--red-mid);
-    letter-spacing: 0.1em;
-    margin-top: 0.8rem;
-    display: none;
-  }
-
-  /* contact section */
-  .contact {
-    padding: 8rem 3rem;
-    border-top: 1px solid rgba(92,10,0,0.1);
-  }
-
-  .contact-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-
-  .contact-left h2 {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 900;
-    color: var(--red-deep);
-    line-height: 1;
-    margin-bottom: 1rem;
-  }
-
-  .contact-left h2 em {
-    font-style: italic;
-    color: var(--red-warm);
-  }
-
-  .contact-left p {
-    font-size: 0.7rem;
-    color: var(--muted);
-    line-height: 1.8;
-    max-width: 320px;
-  }
-
-  .contact-right {
-    background: var(--red-deep);
-    padding: 3rem;
-    position: relative;
-  }
-
-  .contact-right::before {
-    content: 'get in touch';
-    position: absolute;
-    top: -0.8rem;
-    left: 2rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--red-warm);
-    background: var(--cream);
-    padding: 0 0.5rem;
-  }
-
-  .contact-email {
-    font-family: 'Fraunces', serif;
-    font-size: 1.1rem;
-    font-style: italic;
-    color: var(--cream);
-    text-decoration: none;
-    display: block;
-    margin-bottom: 1.5rem;
-    transition: color 0.2s;
-  }
-
+  .contact { padding: 8rem 3rem; border-top: 1px solid rgba(92,10,0,0.1); }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .contact-left h2 { font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; color: var(--red-deep); line-height: 1; margin-bottom: 1rem; }
+  .contact-left h2 em { font-style: italic; color: var(--red-warm); }
+  .contact-left p { font-size: 0.7rem; color: var(--muted); line-height: 1.8; max-width: 320px; }
+  .contact-right { background: var(--red-deep); padding: 3rem; position: relative; }
+  .contact-right::before { content: 'get in touch'; position: absolute; top: -0.8rem; left: 2rem; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-warm); background: var(--cream); padding: 0 0.5rem; }
+  .contact-email { font-family: 'Fraunces', serif; font-size: 1.1rem; font-style: italic; color: var(--cream); text-decoration: none; display: block; margin-bottom: 1.5rem; transition: color 0.2s; }
   .contact-email:hover { color: var(--red-warm); }
-
-  .contact-note {
-    font-size: 0.65rem;
-    color: rgba(232,220,200,0.45);
-    line-height: 1.7;
-    letter-spacing: 0.05em;
-  }
-
-  .contact-links {
-    margin-top: 2rem;
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .contact-links a {
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(232,220,200,0.5);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
+  .contact-note { font-size: 0.65rem; color: rgba(232,220,200,0.45); line-height: 1.7; letter-spacing: 0.05em; }
+  .contact-links { margin-top: 2rem; display: flex; gap: 1.5rem; }
+  .contact-links a { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(232,220,200,0.5); text-decoration: none; transition: color 0.2s; }
   .contact-links a:hover { color: var(--red-warm); }
 
-  @media (max-width: 768px) {
-    .contact-inner { grid-template-columns: 1fr; }
-  }
+  .blog { padding: 8rem 3rem; border-top: 1px solid rgba(92,10,0,0.1); }
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(92,10,0,0.15); border: 1px solid rgba(92,10,0,0.15); margin-top: 4rem; }
+  .blog-card { background: var(--cream); padding: 2.5rem 2rem; position: relative; overflow: hidden; transition: background 0.3s; cursor: crosshair; }
+  .blog-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--red-deep); transform: scaleY(0); transform-origin: top; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .blog-card:hover::before { transform: scaleY(1); }
+  .blog-card:hover { background: rgba(232,220,200,0.5); }
+  .blog-date { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-warm); margin-bottom: 0.8rem; display: block; }
+  .blog-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; color: var(--red-deep); line-height: 1.2; margin-bottom: 0.8rem; }
+  .blog-excerpt { font-size: 0.68rem; color: var(--muted); line-height: 1.8; }
+  .blog-tag { margin-top: 1.2rem; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red-mid); border: 1px solid var(--red-mid); padding: 0.2rem 0.6rem; display: inline-block; }
 
-  /* animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideIn { from { opacity: 0; clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%); } to { opacity: 1; clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); } }
+  @keyframes growLine { to { transform: scaleX(1); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  @keyframes slideIn {
-    from { opacity: 0; clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%); }
-    to { opacity: 1; clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); }
-  }
-
-  @keyframes growLine {
-    to { transform: scaleX(1); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
+  @media (max-width: 1200px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 768px) {
     .hero { grid-template-columns: 1fr; }
     .hero-right { display: none; }
     .products-grid { grid-template-columns: 1fr 1fr; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
     nav { padding: 1.5rem; }
     .hero-left { padding: 8rem 1.5rem 4rem; }
-    .products { padding: 5rem 1.5rem; }
+    .products, .blog, .contact { padding: 5rem 1.5rem; }
     footer { flex-direction: column; gap: 2rem; align-items: flex-start; }
     .footer-links { flex-wrap: wrap; }
-    .contact-inner { grid-template-columns: 1fr; }
-    .blog-grid { grid-template-columns: 1fr; }
   }
-
-  @media (max-width: 480px) {
-    .products-grid { grid-template-columns: 1fr; }
-  }
-
-  /* blog section */
-  .blog {
-    padding: 8rem 3rem;
-    border-top: 1px solid rgba(92,10,0,0.1);
-  }
-
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: rgba(92,10,0,0.15);
-    border: 1px solid rgba(92,10,0,0.15);
-    margin-top: 4rem;
-  }
-
-  .blog-card {
-    background: var(--cream);
-    padding: 2.5rem 2rem;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s;
-    text-decoration: none;
-    display: block;
-    cursor: crosshair;
-  }
-
-  .blog-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--red-deep);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .blog-card:hover::before { transform: scaleY(1); }
-  .blog-card:hover { background: rgba(232,220,200,0.5); }
-
-  .blog-date {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--red-warm);
-    margin-bottom: 0.8rem;
-    display: block;
-  }
-
-  .blog-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--red-deep);
-    line-height: 1.2;
-    margin-bottom: 0.8rem;
-  }
-
-  .blog-excerpt {
-    font-size: 0.68rem;
-    color: var(--muted);
-    line-height: 1.8;
-  }
-
-  .blog-tag {
-    margin-top: 1.2rem;
-    font-size: 0.58rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--red-mid);
-    border: 1px solid var(--red-mid);
-    padding: 0.2rem 0.6rem;
-    display: inline-block;
-  }
+  @media (max-width: 480px) { .products-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -821,10 +186,10 @@
   <div class="hero-left">
     <p class="eyebrow">Open Infrastructure</p>
     <h1 class="hero-title">Your<br><em>stack</em><br>reborn</h1>
-    <p class="hero-sub">i'm building the tools you actually want to use. browsers, ai, mail, all of it, free.</p>
+    <p class="hero-sub">i'm building the tools you actually want to use. browser, ai, mail, music. all of it, free.</p>
     <div class="hero-actions">
-      <a href="#products" class="btn-primary" id="btn-scroll" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'});return false;">See what i built</a>
-      <a href="#" class="btn-ghost nav-dead" onclick="flashEl(this);return false;">Read the docs</a>
+      <a href="#products" class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'});return false;">See what i built</a>
+      <a href="#blog" class="btn-ghost">Read the blog</a>
     </div>
   </div>
 
@@ -832,7 +197,7 @@
     <div class="hero-block"></div>
     <div class="hero-block-inner">
       <div class="stat">
-        <div class="stat-num">4</div>
+        <div class="stat-num">5</div>
         <div class="stat-label">active projects</div>
       </div>
       <div class="stat">
@@ -841,7 +206,7 @@
       </div>
       <div class="stat">
         <div class="stat-num">0</div>
-        <div class="stat-label">venture capital</div>
+        <div class="stat-label">venture capital (probably)</div>
       </div>
     </div>
   </div>
@@ -853,13 +218,13 @@
 </section>
 
 <section class="products" id="products">
-  <div class="section-label">What i make</div>
+  <div class="section-label">my stuff</div>
   <div class="products-grid">
 
     <a class="product-card" href="https://ac3d1t.github.io/fenn/" target="_blank" style="text-decoration:none;display:block;">
       <span class="product-tag">axon / browser</span>
       <h2 class="product-name">Fenn</h2>
-      <p class="product-desc">a web browser built without the tracking, the bloat, or the nonsense. mac, windows, ios, android. comes with a totally free music player too</p>
+      <p class="product-desc">a web browser built without the tracking, the bloat, or the nonsense. mac, windows, ios, android. comes with a free music player too.</p>
       <div class="product-status">
         <div class="dot live"></div>
         live — v1.0.3
@@ -880,7 +245,7 @@
     <div class="product-card">
       <span class="product-tag">axon / mail</span>
       <h2 class="product-name">Relay</h2>
-      <p class="product-desc">email that doesnt read yoir inbox. private and fast.</p>
+      <p class="product-desc">email that doesnt read your inbox. private and fast.</p>
       <div class="product-status">
         <div class="dot soon"></div>
         coming soon
@@ -889,47 +254,34 @@
     </div>
 
     <div class="product-card">
-      <span class="product-tag">axon / hardware</span>
-      <h2 class="product-name">Core-1</h2>
-      <p class="product-desc">a pocket pda running kernOS, axon's custom linux distro. built on rpi zero 2w with a 3.5" resistive touchscreen. [personal project] </p>
-      <div class="product-status">
-        <div class="dot soon"></div>
-        personal project- no release
-      </div>
-
-        <div class="product-card">
       <span class="product-tag">axon / music</span>
       <h2 class="product-name">uHear</h2>
-      <p class="product-desc">music player, free now, free forever. also built into fenn</p>
+      <p class="product-desc">music player, free now, free forever. also built into fenn.</p>
       <div class="product-status">
         <div class="dot soon"></div>
         coming soon
       </div>
-      <button class="btn-notify" onclick="openNotify('Relay', this)">notify me when its ready</button>
+      <button class="btn-notify" onclick="openNotify('uHear', this)">notify me when its ready</button>
+    </div>
+
+    <div class="product-card">
+      <span class="product-tag">axon / hardware</span>
+      <h2 class="product-name">Core-1</h2>
+      <p class="product-desc">a pocket pda running kern, axon's custom linux distro. built on rpi zero 2w with a 3.5" resistive touchscreen. personal project.</p>
+      <div class="product-status">
+        <div class="dot soon"></div>
+        personal — no release
+      </div>
     </div>
 
   </div>
 </section>
 
 <div class="strip">
-  <p class="strip-text">i build things that <span>do exist</span> but better</p>
+  <p class="strip-text">build things that <span>do exist</span> but better</p>
   <span class="strip-mono">axon systems / open infrastructure</span>
 </div>
 
-<!-- notify modal -->
-<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeNotify()">
-  <div class="modal">
-    <button class="modal-close" onclick="closeNotify()">✕</button>
-    <span class="modal-tag" id="modal-tag">axon / product</span>
-    <h3 id="modal-title">stay in the loop</h3>
-    <p>drop your email down below and i'll let you know when it launches. no spam, no newsletter, just the one message.</p>
-    <input class="modal-input" type="email" id="modal-email" placeholder="your@email.com" />
-    <button class="modal-submit" onclick="submitNotify()">notify me</button>
-    <p class="modal-success" id="modal-success">thanks, i'll let you know</p>
-  </div>
-</div>
-
-<!-- blog -->
 <section class="blog" id="blog">
   <div class="section-label">From the build log</div>
   <div class="blog-grid">
@@ -937,28 +289,27 @@
     <div class="blog-card">
       <span class="blog-date">jan 16, 2026</span>
       <h3 class="blog-title">why i'm building a pda in 2026</h3>
-      <p class="blog-excerpt">phones are getting really really big as of right now and majority of the software is just spyware, so i made my own stupid little pda phone running my little linux distro. </p>
+      <p class="blog-excerpt">phones are getting really really big and majority of the software is just spyware, so i made my own stupid little pda running my own linux distro</p>
       <span class="blog-tag">core-1</span>
     </div>
 
     <div class="blog-card">
       <span class="blog-date">feb 22, 2026</span>
-      <h3 class="blog-title">lookimg for some stuff</h3>
-      <p class="blog-excerpt">i did some research and a raspberry pi 2 zero w has 512mb of ram so that means i cant really afford bloatware so im choosing carefully between some different distros (e.g, tinycore, puppy, etc)</p>
+      <h3 class="blog-title">looking for some stuff</h3>
+      <p class="blog-excerpt">the rpi zero 2w has 512mb of ram so i cant afford bloat so ill probably use some tiny distro (e.g, tinycore, puppy, vibOS, etc).</p>
       <span class="blog-tag">kern</span>
     </div>
 
     <div class="blog-card">
       <span class="blog-date">probably in april</span>
       <h3 class="blog-title">actually getting the hardware</h3>
-      <p class="blog-excerpt">ok so right now my cart is like 86 bucks because im on a tight budget so im using a battery bank to actually power the thing, and ill use my 3D printer to get the case but first i have to get the dimensions of the pda before anything, also im planning on putting the battery bank inside of the case so ill make the case openable to charge the battery bank every night, it uses 5000w so its not so strong.</p>
+      <p class="blog-excerpt">ok so right now my cart is at $86 because im on a tight budget, so im using a 5000mah battery bank to power it and my 3d printer for the case, im planning to make the case openable so i can charge it overnight</p>
       <span class="blog-tag">core-1 / kern</span>
     </div>
 
   </div>
 </section>
 
-<!-- contact -->
 <section class="contact" id="contact">
   <div class="contact-inner">
     <div class="contact-left">
@@ -967,7 +318,7 @@
     </div>
     <div class="contact-right">
       <a class="contact-email" href="mailto:chrispy1331@gmail.com">chrispy1331@gmail.com</a>
-      <p class="contact-note">i usually respond within a day or two. building this stuff solo so bare with me.</p>
+      <p class="contact-note">i usually respond within a day or two. building this stuff solo so bear with me.</p>
       <div class="contact-links">
         <a href="https://github.com/ac3d1t" target="_blank">github</a>
         <a href="https://ac3d1t.github.io/fenn/" target="_blank">fenn</a>
@@ -984,11 +335,11 @@
       <li><a href="#blog">blog</a></li>
       <li><a href="#contact">contact</a></li>
     </ul>
-    <p class="footer-copy">built in the open.</p>
+    <p class="footer-copy">built in the open. mit 2026.</p>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   function flashEl(el) {
     el.classList.remove('flashing');
     void el.offsetWidth;
@@ -1011,7 +362,6 @@
       if (btn) { btn.textContent = 'subscribed'; btn.classList.add('subscribed'); btn.disabled = true; }
     }
   }
-
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') {} });
 </script>
+</body>
+</html>
