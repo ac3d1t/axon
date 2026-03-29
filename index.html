@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Axon</title>
+<!-- circular favicon for browser tab -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><clipPath id='circle'><circle cx='50' cy='50' r='50'/></clipPath></defs><circle cx='50' cy='50' r='50' fill='%235c0a00'/><text x='50' y='68' font-family='Georgia,serif' font-size='52' font-weight='900' fill='%23e8dcc8' text-anchor='middle'>A</text></svg>">
+<!-- square apple touch icon for add to home screen -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='38' fill='%235c0a00'/><text x='90' y='125' font-family='Georgia,serif' font-size='100' font-weight='900' fill='%23e8dcc8' text-anchor='middle'>A</text></svg>">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Axon">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -275,7 +282,7 @@
 
   .products-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1px;
     background: rgba(92,10,0,0.15);
     border: 1px solid rgba(92,10,0,0.15);
@@ -707,12 +714,95 @@
   @media (max-width: 768px) {
     .hero { grid-template-columns: 1fr; }
     .hero-right { display: none; }
-    .products-grid { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: 1fr 1fr; }
     nav { padding: 1.5rem; }
     .hero-left { padding: 8rem 1.5rem 4rem; }
     .products { padding: 5rem 1.5rem; }
     footer { flex-direction: column; gap: 2rem; align-items: flex-start; }
     .footer-links { flex-wrap: wrap; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .blog-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .products-grid { grid-template-columns: 1fr; }
+  }
+
+  /* blog section */
+  .blog {
+    padding: 8rem 3rem;
+    border-top: 1px solid rgba(92,10,0,0.1);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(92,10,0,0.15);
+    border: 1px solid rgba(92,10,0,0.15);
+    margin-top: 4rem;
+  }
+
+  .blog-card {
+    background: var(--cream);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: block;
+    cursor: crosshair;
+  }
+
+  .blog-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--red-deep);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .blog-card:hover::before { transform: scaleY(1); }
+  .blog-card:hover { background: rgba(232,220,200,0.5); }
+
+  .blog-date {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red-warm);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .blog-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--red-deep);
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+  }
+
+  .blog-excerpt {
+    font-size: 0.68rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .blog-tag {
+    margin-top: 1.2rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red-mid);
+    border: 1px solid var(--red-mid);
+    padding: 0.2rem 0.6rem;
+    display: inline-block;
   }
 </style>
 </head>
@@ -722,7 +812,7 @@
   <a class="logo" href="#">Axon</a>
   <ul class="nav-links">
     <li><a href="#products">Products</a></li>
-    <li><a href="#" class="nav-dead" onclick="flashEl(this);return false;">Docs</a></li>
+    <li><a href="#blog">Blog</a></li>
     <li><a href="https://github.com/ac3d1t" target="_blank">Github</a></li>
   </ul>
 </nav>
@@ -731,9 +821,9 @@
   <div class="hero-left">
     <p class="eyebrow">Open Infrastructure</p>
     <h1 class="hero-title">Your<br><em>stack</em><br>reborn</h1>
-    <p class="hero-sub">axon is building the tools you actually want to use. fenn, lumen, relay. browser, ai, mail. all of it, free.</p>
+    <p class="hero-sub">i'm building the tools you actually want to use. browsers, ai, mail, all of it, free.</p>
     <div class="hero-actions">
-      <a href="#products" class="btn-primary" id="btn-scroll" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'});return false;">See what we built</a>
+      <a href="#products" class="btn-primary" id="btn-scroll" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'});return false;">See what i built</a>
       <a href="#" class="btn-ghost nav-dead" onclick="flashEl(this);return false;">Read the docs</a>
     </div>
   </div>
@@ -742,7 +832,7 @@
     <div class="hero-block"></div>
     <div class="hero-block-inner">
       <div class="stat">
-        <div class="stat-num">3</div>
+        <div class="stat-num">4</div>
         <div class="stat-label">active projects</div>
       </div>
       <div class="stat">
@@ -763,13 +853,13 @@
 </section>
 
 <section class="products" id="products">
-  <div class="section-label">What we make</div>
+  <div class="section-label">What i make</div>
   <div class="products-grid">
 
     <a class="product-card" href="https://ac3d1t.github.io/fenn/" target="_blank" style="text-decoration:none;display:block;">
       <span class="product-tag">axon / browser</span>
       <h2 class="product-name">Fenn</h2>
-      <p class="product-desc">a web browser built without the tracking, the bloat, or the nonsense. mac, windows, ios, android. just the web.</p>
+      <p class="product-desc">a web browser built without the tracking, the bloat, or the nonsense. mac, windows, ios, android. comes with a totally free music player too</p>
       <div class="product-status">
         <div class="dot live"></div>
         live — v1.0.3
@@ -790,7 +880,27 @@
     <div class="product-card">
       <span class="product-tag">axon / mail</span>
       <h2 class="product-name">Relay</h2>
-      <p class="product-desc">email that doesnt read ur inbox. yourname@axon.com, private and fast.</p>
+      <p class="product-desc">email that doesnt read yoir inbox. private and fast.</p>
+      <div class="product-status">
+        <div class="dot soon"></div>
+        coming soon
+      </div>
+      <button class="btn-notify" onclick="openNotify('Relay', this)">notify me when its ready</button>
+    </div>
+
+    <div class="product-card">
+      <span class="product-tag">axon / hardware</span>
+      <h2 class="product-name">Core-1</h2>
+      <p class="product-desc">a pocket pda running kernOS, axon's custom linux distro. built on rpi zero 2w with a 3.5" resistive touchscreen. [personal project] </p>
+      <div class="product-status">
+        <div class="dot soon"></div>
+        personal project- no release
+      </div>
+
+        <div class="product-card">
+      <span class="product-tag">axon / music</span>
+      <h2 class="product-name">uHear</h2>
+      <p class="product-desc">music player, free now, free forever. also built into fenn</p>
       <div class="product-status">
         <div class="dot soon"></div>
         coming soon
@@ -802,7 +912,7 @@
 </section>
 
 <div class="strip">
-  <p class="strip-text">we build things that <span>should exist</span> but dont yet</p>
+  <p class="strip-text">i build things that <span>do exist</span> but better</p>
   <span class="strip-mono">axon systems / open infrastructure</span>
 </div>
 
@@ -812,12 +922,41 @@
     <button class="modal-close" onclick="closeNotify()">✕</button>
     <span class="modal-tag" id="modal-tag">axon / product</span>
     <h3 id="modal-title">stay in the loop</h3>
-    <p>drop ur email and we'll hit u when it launches. no spam, just the one message.</p>
+    <p>drop your email down below and i'll let you know when it launches. no spam, no newsletter, just the one message.</p>
     <input class="modal-input" type="email" id="modal-email" placeholder="your@email.com" />
     <button class="modal-submit" onclick="submitNotify()">notify me</button>
-    <p class="modal-success" id="modal-success">got it, we'll let you know</p>
+    <p class="modal-success" id="modal-success">thanks, i'll let you know</p>
   </div>
 </div>
+
+<!-- blog -->
+<section class="blog" id="blog">
+  <div class="section-label">From the build log</div>
+  <div class="blog-grid">
+
+    <div class="blog-card">
+      <span class="blog-date">jan 16, 2026</span>
+      <h3 class="blog-title">why i'm building a pda in 2026</h3>
+      <p class="blog-excerpt">phones are getting really really big as of right now and majority of the software is just spyware, so i made my own stupid little pda phone running my little linux distro. </p>
+      <span class="blog-tag">core-1</span>
+    </div>
+
+    <div class="blog-card">
+      <span class="blog-date">feb 22, 2026</span>
+      <h3 class="blog-title">lookimg for some stuff</h3>
+      <p class="blog-excerpt">i did some research and a raspberry pi 2 zero w has 512mb of ram so that means i cant really afford bloatware so im choosing carefully between some different distros (e.g, tinycore, puppy, etc)</p>
+      <span class="blog-tag">kern</span>
+    </div>
+
+    <div class="blog-card">
+      <span class="blog-date">probably in april</span>
+      <h3 class="blog-title">actually getting the hardware</h3>
+      <p class="blog-excerpt">ok so right now my cart is like 86 bucks because im on a tight budget so im using a battery bank to actually power the thing, and ill use my 3D printer to get the case but first i have to get the dimensions of the pda before anything, also im planning on putting the battery bank inside of the case so ill make the case openable to charge the battery bank every night, it uses 5000w so its not so strong.</p>
+      <span class="blog-tag">core-1 / kern</span>
+    </div>
+
+  </div>
+</section>
 
 <!-- contact -->
 <section class="contact" id="contact">
@@ -828,7 +967,7 @@
     </div>
     <div class="contact-right">
       <a class="contact-email" href="mailto:chrispy1331@gmail.com">chrispy1331@gmail.com</a>
-      <p class="contact-note">usually respond within a day or two. building this stuff solo so bare with me.</p>
+      <p class="contact-note">i usually respond within a day or two. building this stuff solo so bare with me.</p>
       <div class="contact-links">
         <a href="https://github.com/ac3d1t" target="_blank">github</a>
         <a href="https://ac3d1t.github.io/fenn/" target="_blank">fenn</a>
@@ -842,14 +981,14 @@
   <div class="footer-right">
     <ul class="footer-links">
       <li><a href="https://github.com/ac3d1t" target="_blank">github</a></li>
-      <li><a href="#" class="nav-dead" onclick="flashEl(this);return false;">docs</a></li>
+      <li><a href="#blog">blog</a></li>
       <li><a href="#contact">contact</a></li>
     </ul>
-    <p class="footer-copy">axon. built in the open.</p>
+    <p class="footer-copy">built in the open.</p>
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   function flashEl(el) {
     el.classList.remove('flashing');
     void el.offsetWidth;
@@ -860,7 +999,7 @@
   async function openNotify(product, btn) {
     if (!('Notification' in window)) { alert('your browser doesnt support notifications'); return; }
     if (Notification.permission === 'granted') {
-      new Notification('axon / ' + product.toLowerCase(), { body: "already subscribed. we'll ping u when " + product + " drops." });
+      new Notification('axon / ' + product.toLowerCase(), { body: "already subscribed. i'll ping u when " + product + " drops." });
       return;
     }
     if (Notification.permission === 'denied') {
@@ -868,38 +1007,11 @@
     }
     const permission = await Notification.requestPermission();
     if (permission === 'granted') {
-      new Notification('axon / ' + product.toLowerCase(), { body: "subscribed. we'll let u know when " + product + " is ready." });
+      new Notification('axon / ' + product.toLowerCase(), { body: "subscribed. i'll let u know when " + product + " is ready." });
       if (btn) { btn.textContent = 'subscribed'; btn.classList.add('subscribed'); btn.disabled = true; }
     }
   }
 
-  let currentProduct = '';
 
-  function openNotify(product) {
-    currentProduct = product;
-    document.getElementById('modal-tag').textContent = 'axon / ' + product.toLowerCase();
-    document.getElementById('modal-title').textContent = product + ' — stay in the loop';
-    document.getElementById('modal-email').value = '';
-    document.getElementById('modal-success').style.display = 'none';
-    document.getElementById('modal-overlay').classList.add('open');
-  }
-
-  function closeNotify() {
-    document.getElementById('modal-overlay').classList.remove('open');
-  }
-
-  function submitNotify() {
-    const email = document.getElementById('modal-email').value.trim();
-    if (!email || !email.includes('@')) {
-      document.getElementById('modal-email').style.borderColor = 'var(--red-warm)';
-      setTimeout(() => document.getElementById('modal-email').style.borderColor = '', 600);
-      return;
-    }
-    document.getElementById('modal-success').style.display = 'block';
-    setTimeout(closeNotify, 1800);
-  }
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNotify(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') {} });
 </script>
-</body>
-</html>
