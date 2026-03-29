@@ -118,6 +118,7 @@
   .blog-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; color: var(--red-deep); line-height: 1.2; margin-bottom: 0.8rem; }
   .blog-excerpt { font-size: 0.68rem; color: var(--muted); line-height: 1.8; }
   .blog-tag { margin-top: 1.2rem; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red-mid); border: 1px solid var(--red-mid); padding: 0.2rem 0.6rem; display: inline-block; }
+
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes slideIn { from { opacity: 0; clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%); } to { opacity: 1; clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); } }
   @keyframes growLine { to { transform: scaleX(1); } }
@@ -129,9 +130,21 @@
   }
   @media (max-width: 768px) {
     .hero { grid-template-columns: 1fr; }
-    .hero-right { position: static; clip-path: none; background: var(--red-deep); padding: 3rem 1.5rem; margin-top: 2rem; border-radius: 12px; }
+    .hero-right { 
+      position: static; 
+      background: var(--red-deep); 
+      padding: 3rem 1.5rem; 
+      margin-top: 2rem; 
+      border-radius: 0; /* sharp edges as requested */
+    }
     .hero-block { display: none; }
-    .hero-block-inner { position: static; clip-path: none; padding: 0; align-items: flex-start; text-align: left; }
+    .hero-block-inner { 
+      position: static; 
+      clip-path: none; 
+      padding: 0; 
+      align-items: flex-start; 
+      text-align: left; 
+    }
     .stat { text-align: left; }
     .products-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
     .blog-grid { grid-template-columns: 1fr; }
@@ -303,12 +316,6 @@
   </div>
 </footer>
 <script>
-  function flashEl(el) {
-    el.classList.remove('flashing');
-    void el.offsetWidth;
-    el.classList.add('flashing');
-    setTimeout(() => el.classList.remove('flashing'), 600);
-  }
   async function openNotify(product, btn) {
     if (!('Notification' in window)) { alert('your browser doesnt support notifications'); return; }
     if (Notification.permission === 'granted') {
