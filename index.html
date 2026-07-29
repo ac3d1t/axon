@@ -3,612 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oculon | Do More. Be More.</title>
+    <title>Oculon</title>
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Replace the href below with your exact base64 string from the Oculon snippet -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,YOUR_BASE64_STRING_HERE" />
 
     <style>
-        /* Color Specs & Variables */
-        :root {
-            --black: #060607;
-            --panel: #101113;
-            --steel: #23262a;
-            --line: #2c2f33;
-            --chrome-1: #ffffff;
-            --chrome-2: #d6dade;
-            --chrome-3: #8a9098;
-            --chrome-4: #c3c8cd;
-            --text: #e9eaec;
-            --muted: #8b9096;
-            --accent: #b7bec4;
-        }
-
-        /* Reset & Base */
-        * {
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--black);
-            color: var(--text);
-            font-family: 'DM Mono', monospace;
-            overflow-x: hidden;
-            line-height: 1.6;
-            background-image: 
-                linear-gradient(rgba(6, 6, 7, 0.95), rgba(6, 6, 7, 0.95)),
-                url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.05"/></svg>');
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        /* Typography & Effects */
-        .chrome-text {
-            background: linear-gradient(135deg, var(--chrome-1) 0%, var(--chrome-3) 40%, var(--chrome-1) 60%, var(--chrome-4) 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: chromeShine 6s linear infinite;
-        }
-
-        @keyframes chromeShine {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .scroll-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.5rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(16, 17, 19, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--line);
-            z-index: 100;
-        }
-
-        .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
-            letter-spacing: 2px;
-            text-decoration: none;
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            margin-left: 2rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--chrome-1); }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            padding: 0 1rem;
-        }
-
-        #particle-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-
-        .hero p {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            color: var(--muted);
-            max-width: 600px;
-            margin-bottom: 2.5rem;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            text-decoration: none;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            border: 1px solid var(--line);
-            background: rgba(16, 17, 19, 0.5);
-            color: var(--chrome-2);
-            backdrop-filter: blur(4px);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
+            background-color: #000;
             overflow: hidden;
-        }
-
-        .btn:hover {
-            background: var(--chrome-2);
-            color: var(--black);
-            border-color: var(--chrome-1);
-        }
-
-        .btn-primary {
-            background: var(--chrome-3);
-            color: var(--black);
-            border-color: var(--chrome-3);
-        }
-        
-        .btn-primary:hover {
-            background: var(--chrome-1);
-            border-color: var(--chrome-1);
-        }
-
-        /* Products Section */
-        .section {
-            padding: 8rem 3rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            margin-bottom: 4rem;
-            font-size: 2.5rem;
-            color: var(--chrome-1);
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            perspective: 1000px;
-        }
-
-        .product-card {
-            background: linear-gradient(145deg, var(--panel), #0a0b0d);
-            border: 1px solid var(--line);
-            padding: 3rem 2rem;
-            border-radius: 4px;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.1s;
-            cursor: pointer;
-        }
-
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05), transparent 70%);
-            pointer-events: none;
-        }
-
-        .status-indicator {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            color: var(--muted);
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: #4ade80;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #4ade80;
-            animation: pulse 2s infinite;
-        }
-
-        .dot.progress {
-            background: #fbbf24;
-            box-shadow: 0 0 10px #fbbf24;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
-        }
-
-        .product-card h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            transform: translateZ(30px);
-        }
-
-        .product-card p {
-            color: var(--muted);
-            transform: translateZ(20px);
-        }
-
-        /* Callout Strip */
-        .callout {
-            background: var(--steel);
-            padding: 4rem 2rem;
-            text-align: center;
-            border-top: 1px solid var(--line);
-            border-bottom: 1px solid var(--line);
-        }
-
-        .callout h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            color: var(--chrome-2);
-            letter-spacing: 2px;
-        }
-
-        /* Contact Section */
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .contact-text h2 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .contact-text p {
-            color: var(--muted);
-            margin-bottom: 2rem;
-        }
-
-        .interactive-contact {
-            background: var(--panel);
-            border: 1px solid var(--line);
-            padding: 4rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 250px;
-        }
-
-        #email-reveal {
-            font-size: 1.5rem;
-            color: var(--chrome-1);
-            letter-spacing: 2px;
-            font-weight: bold;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 1.2em;
-            background: var(--chrome-1);
-            vertical-align: middle;
-            animation: blink 1s step-end infinite;
-            display: none;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        /* Footer */
-        footer {
-            padding: 3rem;
-            border-top: 1px solid var(--line);
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            background: var(--panel);
         }
-        
-        .footer-logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
-            color: var(--muted);
-        }
-
-        @media (max-width: 768px) {
-            .contact-container { grid-template-columns: 1fr; }
-            nav { padding: 1rem; }
-            .nav-links { display: none; }
-            .section { padding: 4rem 1.5rem; }
-            .product-card { transform: none !important; } /* Disable 3D on mobile */
+        canvas {
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#" class="logo chrome-text">OCULON</a>
-        <div class="nav-links">
-            <a href="#products">Products</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </nav>
-
-    <header class="hero">
-        <canvas id="particle-canvas"></canvas>
-        <h1 class="chrome-text scroll-reveal">DO MORE.<br>BE MORE.</h1>
-        <p class="scroll-reveal">Oculon develops software built on privacy, performance, and user control.</p>
-        <div class="btn-group scroll-reveal">
-            <a href="#products" class="btn btn-primary">View Products</a>
-            <a href="#contact" class="btn">Contact Us</a>
-        </div>
-    </header>
-
-    <section id="products" class="section">
-        <h2 class="section-header scroll-reveal">Ecosystem</h2>
-        <div class="products-grid">
-            
-            <div class="product-card scroll-reveal">
-                <div class="status-indicator">
-                    <span class="dot"></span> Live
-                </div>
-                <h3>FENN</h3>
-                <p>The privacy-first data architecture suite. Total control over your information routing with zero-knowledge encryption protocols standard out of the box.</p>
-            </div>
-
-            <div class="product-card scroll-reveal" style="transition-delay: 0.2s;">
-                <div class="status-indicator">
-                    <span class="dot progress"></span> In Progress
-                </div>
-                <h3>uHEAR</h3>
-                <p>Next-generation auditory processing engine. Enhancing digital audio environments with localized performance isolation and pure fidelity.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="callout scroll-reveal">
-        <h2>BUILDING PRODUCTS THAT ALREADY EXIST, DONE PROPERLY.</h2>
-    </section>
-
-    <section id="contact" class="section">
-        <div class="contact-container">
-            <div class="contact-text scroll-reveal">
-                <h2 class="chrome-text">GET IN TOUCH</h2>
-                <p>Ready to deploy secure, performance-driven software environments? Connect with our engineering and integration team.</p>
-            </div>
-            <div class="interactive-contact scroll-reveal">
-                <button id="reveal-btn" class="btn">Initialize Contact</button>
-                <div style="display: flex; align-items: center; margin-top: 1rem;">
-                    <span id="email-reveal"></span><span class="cursor" id="type-cursor"></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-logo">OCULON &copy; 2026</div>
-        <div class="nav-links" style="display: block;">
-            <a href="#products">Products</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </footer>
+    <canvas id="particleCanvas"></canvas>
 
     <script>
-        // --- 1. Scroll Reveal Animations ---
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
+        // --- 1. CONFIGURATION ---
+        const CONFIG = {
+            imageUrl: 'fenn_2.png', // Updated to use the provided source image
+            particleSize: 3,
+            particleSpacing: 4,
+            transitionDuration: 1000, // in milliseconds
+            mouseRepulsion: 80,
+            returnSpeed: 0.1,
+            shape: 'circle' // 'circle' or 'square'
         };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
-
-        // --- 2. 3D Product Card Transforms ---
-        const cards = document.querySelectorAll('.product-card');
-        
-        // Only enable 3D effects for desktop devices (avoids sticky touch states)
-        if (window.matchMedia("(hover: hover)").matches) {
-            cards.forEach(card => {
-                card.addEventListener('mousemove', e => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    // Calculate rotation (-10 to 10 degrees)
-                    const xRot = ((y - rect.height / 2) / rect.height) * -20;
-                    const yRot = ((x - rect.width / 2) / rect.width) * 20;
-                    
-                    card.style.transform = `perspective(1000px) rotateX(${xRot}deg) rotateY(${yRot}deg) scale3d(1.02, 1.02, 1.02)`;
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                    // Add smooth transition just for the reset
-                    card.style.transition = 'transform 0.5s ease-out';
-                    setTimeout(() => { card.style.transition = 'transform 0.1s'; }, 500);
-                });
-            });
-        }
-
-        // --- 3. Interactive Typewriter Email Reveal ---
-        const revealBtn = document.getElementById('reveal-btn');
-        const emailText = document.getElementById('email-reveal');
-        const cursor = document.getElementById('type-cursor');
-        const emailAddress = "hello@oculon.sys";
-        
-        revealBtn.addEventListener('click', () => {
-            revealBtn.style.display = 'none';
-            cursor.style.display = 'inline-block';
-            
-            let i = 0;
-            emailText.textContent = "";
-            
-            const typeWriter = setInterval(() => {
-                if (i < emailAddress.length) {
-                    emailText.textContent += emailAddress.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(typeWriter);
-                    // Add subtle glow effect upon completion
-                    emailText.style.textShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
-                }
-            }, 75); // Typing speed
-        });
-
-        // --- 4. Canvas Particle Physics (Hero Background) ---
-        const canvas = document.getElementById('particle-canvas');
+        // --- 2. CANVAS SETUP ---
+        const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
-        
-        let width, height;
         let particles = [];
-        const mouse = { x: null, y: null, radius: 150 };
+        let mouse = { x: undefined, y: undefined, radius: CONFIG.mouseRepulsion };
 
-        function resizeCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.x;
-            mouse.y = e.y;
+        // --- 3. EVENT LISTENERS ---
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init(); // Reinitialize on resize
         });
 
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = undefined;
+            mouse.y = undefined;
+        });
+
+        // --- 4. PARTICLE CLASS ---
         class Particle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
+            constructor(x, y, color) {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
                 this.baseX = x;
                 this.baseY = y;
-                this.size = Math.random() * 2 + 1;
-                this.density = (Math.random() * 30) + 1;
-                // Metallic grays
-                const shade = Math.floor(Math.random() * 100 + 155); 
-                this.color = `rgba(${shade}, ${shade}, ${shade}, ${Math.random() * 0.5 + 0.2})`;
+                this.color = color;
+                this.size = CONFIG.particleSize;
             }
 
             draw() {
                 ctx.fillStyle = this.color;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
+                if (CONFIG.shape === 'circle') {
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(this.x, this.y, this.size, this.size);
+                }
             }
 
             update() {
-                // Physics: interact with mouse
+                // Mouse repulsion logic
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
                 let distance = Math.sqrt(dx * dx + dy * dy);
+                
                 let forceDirectionX = dx / distance;
                 let forceDirectionY = dy / distance;
+                let force = (mouse.radius - distance) / mouse.radius;
                 
-                // Repel distance
-                let maxDistance = mouse.radius;
-                let force = (maxDistance - distance) / maxDistance;
-                if (force < 0) force = 0;
-                
-                let directionX = (forceDirectionX * force * this.density);
-                let directionY = (forceDirectionY * force * this.density);
+                let directionX = forceDirectionX * force * 5;
+                let directionY = forceDirectionY * force * 5;
 
                 if (distance < mouse.radius) {
                     this.x -= directionX;
                     this.y -= directionY;
                 } else {
-                    // Spring back to base position
+                    // Return to base position
                     if (this.x !== this.baseX) {
                         let dx = this.x - this.baseX;
-                        this.x -= dx / 10;
+                        this.x -= dx * CONFIG.returnSpeed;
                     }
                     if (this.y !== this.baseY) {
                         let dy = this.y - this.baseY;
-                        this.y -= dy / 10;
+                        this.y -= dy * CONFIG.returnSpeed;
                     }
                 }
                 this.draw();
             }
         }
 
-        function initParticles() {
+        // --- 5. INITIALIZATION & IMAGE PROCESSING ---
+        function init() {
             particles = [];
-            let numberOfParticles = (width * height) / 8000; 
-            for (let i = 0; i < numberOfParticles; i++) {
-                let x = Math.random() * width;
-                let y = Math.random() * height;
-                particles.push(new Particle(x, y));
-            }
-        }
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.src = CONFIG.imageUrl;
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, width, height);
-            
-            // Connect nearby particles with lines for a tech mesh look
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                for (let j = i; j < particles.length; j++) {
-                    let dx = particles[i].x - particles[j].x;
-                    let dy = particles[i].y - particles[j].y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 100) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(214, 218, 222, ${0.1 - distance/1000})`; // Chrome-2 color faded
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                        ctx.closePath();
+            img.onload = () => {
+                // Draw image to a temporary canvas to read pixel data
+                const tempCanvas = document.createElement('canvas');
+                const tempCtx = tempCanvas.getContext('2d');
+                
+                // Scale image to fit within the screen reasonably
+                let scale = Math.min(canvas.width / img.width, canvas.height / img.height) * 0.8;
+                tempCanvas.width = img.width * scale;
+                tempCanvas.height = img.height * scale;
+                
+                tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+                const data = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+                
+                // Calculate offsets to center the image on the main canvas
+                const offsetX = (canvas.width - tempCanvas.width) / 2;
+                const offsetY = (canvas.height - tempCanvas.height) / 2;
+
+                // Create particles based on pixel data
+                for (let y = 0; y < data.height; y += CONFIG.particleSpacing) {
+                    for (let x = 0; x < data.width; x += CONFIG.particleSpacing) {
+                        let index = (y * data.width + x) * 4;
+                        let r = data.data[index];
+                        let g = data.data[index + 1];
+                        let b = data.data[index + 2];
+                        let a = data.data[index + 3];
+
+                        if (a > 128) { // Only create particles for non-transparent pixels
+                            let color = `rgb(${r}, ${g}, ${b})`;
+                            particles.push(new Particle(x + offsetX, y + offsetY, color));
+                        }
                     }
                 }
+            };
+            
+            // Fallback if image fails to load
+            img.onerror = () => {
+                console.warn("Image failed to load. Drawing fallback text.");
+                ctx.fillStyle = "white";
+                ctx.font = "30px Arial";
+                ctx.fillText("Failed to load fenn_2.png", 50, canvas.height/2);
             }
-            requestAnimationFrame(animateParticles);
         }
 
-        initParticles();
-        animateParticles();
+        // --- 6. ANIMATION LOOP ---
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // Start
+        init();
+        animate();
     </script>
 </body>
 </html>
